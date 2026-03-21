@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --bg: #0a0c0f;
+  --bg-soft: #11161c;
+  --line: rgba(255, 255, 255, 0.1);
+  --text: #eef2f5;
+  --muted: #9aa6b2;
+  --accent: #8ec5ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: radial-gradient(circle at top, #141b23, var(--bg) 52%);
+  color: var(--text);
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-shell {
+  min-height: 100vh;
+}
+
+.container {
+  width: min(1200px, 92vw);
+  margin: 0 auto;
+  padding: 2.5rem 0 4rem;
+}
+
+.hero {
+  margin-bottom: 2.5rem;
+}
+
+.hero-kicker {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin: 0 0 0.6rem;
+  font-size: 0.78rem;
+}
+
+.hero-title {
+  font-size: clamp(2.1rem, 5vw, 3.5rem);
+  margin: 0;
+}
+
+.hero-subtitle {
+  color: var(--muted);
+  margin: 0.8rem 0 0;
+  max-width: 58ch;
+}
+
+.masonry-grid {
+  column-count: 1;
+  column-gap: 1.2rem;
+}
+
+@media (min-width: 720px) {
+  .masonry-grid {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 1060px) {
+  .masonry-grid {
+    column-count: 3;
+  }
+}
+
+.photo-card {
+  break-inside: avoid;
+  margin: 0 0 1.2rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: color-mix(in oklab, var(--bg-soft) 88%, transparent);
+  overflow: hidden;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.photo-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(142, 197, 255, 0.45);
+}
+
+.photo-link {
+  display: block;
+}
+
+.photo-image {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.photo-placeholder {
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+
+.photo-meta {
+  padding: 0.95rem 1rem 1.1rem;
+}
+
+.photo-meta h2 {
+  margin: 0.2rem 0 0.45rem;
+  font-size: 1.05rem;
+}
+
+.photo-meta p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.photo-date {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.detail-page {
+  max-width: 980px;
+}
+
+.back-link {
+  color: var(--muted);
+  border-bottom: 1px solid transparent;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.back-link:hover {
+  color: var(--text);
+  border-color: var(--line);
+}
+
+.detail-card {
+  margin-top: 1rem;
+  background: color-mix(in oklab, var(--bg-soft) 88%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 1.1rem;
+  overflow: hidden;
+}
+
+.detail-image {
+  width: 100%;
+  max-height: 72vh;
+  object-fit: cover;
+  display: block;
+}
+
+.detail-content {
+  padding: 1.2rem 1.3rem 1.5rem;
+}
+
+.detail-content h1 {
+  margin: 0.3rem 0 0.8rem;
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+}
+
+.detail-content p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}

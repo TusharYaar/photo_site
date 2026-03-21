@@ -1,0 +1,73 @@
+---
+import "../styles/global.css";
+import { bodyToExcerpt, getAllPhotoPosts, urlForImage } from "../lib/sanity";
+
+const photos = []
+// await getAllPhotoPosts();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Lenscape - Photography Journal</title>
+    <meta
+      name="description"
+      content="A curated, modern photography journal powered by Astro static generation and Sanity CMS."
+    />
+  </head>
+
+  <body class="site-shell">
+    <main class="container">
+      <header class="hero">
+        <p class="hero-kicker">Photography</p>
+        <h1 class="hero-title">Lenscape Journal</h1>
+        <p class="hero-subtitle">
+          A modern, statically generated photo archive with editorial storytelling.
+        </p>
+      </header>
+
+      <section class="masonry-grid" aria-label="Photo Gallery">
+        {
+          photos.map((photo) => {
+            const imageUrl = photo.image
+              ? urlForImage(photo.image).width(900).auto("format").quality(82).url()
+              : undefined;
+            const excerpt = bodyToExcerpt(photo.body);
+            const publishedLabel = new Date(photo.publishedAt).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            });
+
+            return (
+              <article class="photo-card">
+                <a href={`/photos/${photo.slug.current}/`} class="photo-link">
+                  {imageUrl ? (
+                    <img
+                      src={imageUrl}
+                      alt={photo.image?.alt ?? photo.title}
+                      loading="lazy"
+                      decoding="async"
+                      class="photo-image"
+                    />
+                  ) : (
+                    <div class="photo-image photo-placeholder">Image not available</div>
+                  )}
+                  <div class="photo-meta">
+                    <p class="photo-date">{publishedLabel}</p>
+                    <h2>{photo.title}</h2>
+                    {excerpt && <p>{excerpt}</p>}
+                  </div>
+                </a>
+              </article>
+            );
+          })
+        }
+      </section>
+    </main>
+  </body>
+</html>

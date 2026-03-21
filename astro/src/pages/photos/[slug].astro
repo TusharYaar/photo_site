@@ -1,0 +1,58 @@
+---
+import "../../styles/global.css";
+import { bodyToExcerpt, getAllPhotoPosts, getPhotoPostBySlug, urlForImage } from "../../lib/sanity";
+
+export async function getStaticPaths() {
+  const posts = await getAllPhotoPosts();
+  return posts.map((post) => ({
+    params: { slug: post.slug.current },
+  }));
+}
+
+const { slug } = Astro.params;
+const post = slug ? await getPhotoPostBySlug(slug) : null;
+
+if (!post) {
+  throw new Error(`Photo post not found for slug: ${slug}`);
+}
+
+const imageUrl = post.image
+  ? urlForImage(post.image).width(1400).auto("format").quality(86).url()
+  : undefined;
+
+const excerpt = bodyToExcerpt(post.body, 220);
+const publishedLabel = new Date(post.publishedAt).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{post.title} - Lenscape</title>
+    <meta name="description" content={excerpt || `Photo story: ${post.title}`} />
+  </head>
+  <body class="site-shell">
+    <main class="container detail-page">
+      <a href="/" class="back-link">Back to gallery</a>
+      <article class="detail-card">
+        {imageUrl ? (
+          <img src={imageUrl} alt={post.image?.alt ?? post.title} class="detail-image" />
+        ) : (
+          <div class="detail-image photo-placeholder">Image not available</div>
+        )}
+
+        <div class="detail-content">
+          <p class="photo-date">{publishedLabel}</p>
+          <h1>{post.title}</h1>
+          {excerpt && <p>{excerpt}</p>}
+        </div>
+      </article>
+    </main>
+  </body>
+</html>

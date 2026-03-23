@@ -9,29 +9,8 @@ const height = orientation === "potraint" ? 540 : 300;
 ---
 
 <article class="masonry-grid-picture" class:list={[orientation, className]}>
-  <Picture src={url} alt={title} width={width} height={height} loading={loading} />
+  <Picture src={url} alt={title} width={width} height={height} loading={loading}  formats={['avif', 'webp']}/>
   <a class="download-link" href={downloadUrl} download>
     <Download class="download-icon" />
   </a>
 </article>
-
-<!-- <article class="photo-card">
-    <a href={`/photos/${photo.slug.current}/`} class="photo-link">
-      {imageUrl ? (
-        <img
-          src={imageUrl}
-          alt={photo.image?.alt ?? photo.title}
-          loading="lazy"
-          decoding="async"
-          class="photo-image"
-        />
-      ) : (
-        <div class="photo-image photo-placeholder">Image not available</div>
-      )}
-      <div class="photo-meta">
-        <p class="photo-date">{publishedLabel}</p>
-        <h2>{photo.title}</h2>
-        {excerpt && <p>{excerpt}</p>}
-      </div>
-    </a>
-  </article> -->

@@ -1,5 +1,3 @@
-@import "tailwindcss";
-
 :root {
   color-scheme: dark;
   --bg: #0a0c0f;
@@ -33,7 +31,7 @@ a {
 }
 
 .container {
-  width: min(1200px, 92vw);
+  width: 1200px;
   margin: 0 auto;
   padding: 2.5rem 0 4rem;
 }
@@ -46,7 +44,6 @@ a {
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--accent);
-  margin: 0 0 0.6rem;
   font-size: 0.78rem;
 }
 
@@ -62,21 +59,95 @@ a {
 }
 
 .masonry-grid {
-  column-count: 1;
-  column-gap: 1.2rem;
+  display: grid;
+  /* This creates as many columns as will fit, each at least 250px wide */
+  grid-template-columns: repeat(6, 184px);
+  grid-auto-rows: 184px;
+  grid-auto-flow: dense;
+  /* Space between your photos */
+  grid-gap: 16px;
+  padding: 16px 8px;
+ 
 }
 
-@media (min-width: 720px) {
-  .masonry-grid {
-    column-count: 2;
+.masonry-grid-picture {
+  overflow: hidden;
+  border-radius: 24px;
+
+}
+
+.masonry-grid-picture img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  resize: cover;
+}
+
+.masonry-grid-picture.grid-landscape {
+  grid-column-end: span 2;  
+  grid-row-end: span 1;  
+}
+
+.masonry-grid-picture.grid-portrait {
+  grid-column-end: span 1;  
+  grid-row-end: span 2;  
+}
+
+.masonry-grid-picture.grid-square {
+  grid-column-end: span 1;  
+  grid-row-end: span 1;  
+}
+
+.masonry-grid-picture.grid-big-square {
+  grid-column-end: span 2;  
+  grid-row-end: span 2;  
+}
+
+/* @media (min-width: 720px) {
+
+  .masonry-grid-picture.grid-landscape {
+    grid-column-end: span 2;  
+    grid-row-end: span 1;  
+  }
+  
+  .masonry-grid-picture.grid-portrait {
+    grid-column-end: span 1;  
+    grid-row-end: span 2;  
+  }
+  
+  .masonry-grid-picture.grid-square {
+    grid-column-end: span 1;  
+    grid-row-end: span 1;  
+  }
+  
+  .masonry-grid-picture.grid-big-square {
+    grid-column-end: span 2;  
+    grid-row-end: span 2;  
   }
 }
 
 @media (min-width: 1060px) {
-  .masonry-grid {
-    column-count: 3;
+  .masonry-grid-picture.lg-grid-landscape {
+    grid-column-end: span 2;  
+    grid-row-end: span 1;  
   }
-}
+  
+  .masonry-grid-picture.grid-portrait {
+    grid-column-end: span 1;  
+    grid-row-end: span 2;  
+  }
+  
+  .masonry-grid-picture.grid-square {
+    grid-column-end: span 1;  
+    grid-row-end: span 1;  
+  }
+  
+  .masonry-grid-picture.grid-big-square {
+    grid-column-end: span 2;  
+    grid-row-end: span 2;  
+  }
+}  */
 
 .photo-card {
   break-inside: avoid;
@@ -91,46 +162,6 @@ a {
 .photo-card:hover {
   transform: translateY(-3px);
   border-color: rgba(142, 197, 255, 0.45);
-}
-
-.photo-link {
-  display: block;
-}
-
-.photo-image {
-  width: 100%;
-  display: block;
-  object-fit: cover;
-}
-
-.photo-placeholder {
-  min-height: 280px;
-  display: grid;
-  place-items: center;
-  color: var(--muted);
-  border-bottom: 1px solid var(--line);
-}
-
-.photo-meta {
-  padding: 0.95rem 1rem 1.1rem;
-}
-
-.photo-meta h2 {
-  margin: 0.2rem 0 0.45rem;
-  font-size: 1.05rem;
-}
-
-.photo-meta p {
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.45;
-}
-
-.photo-date {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--accent);
 }
 
 .detail-page {

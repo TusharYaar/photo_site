@@ -1,6 +1,6 @@
 import { createClient } from "@sanity/client";
-import imageUrlBuilder from "@sanity/image-url";
-import type { PhotoPost, SanityImageAsset } from "./types";
+import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
+import type { Photo, PhotoDocument, SanityImageAsset } from "./types";
 
 const projectId = import.meta.env.SANITY_PROJECT_ID;
 const dataset = import.meta.env.SANITY_DATASET;
@@ -18,28 +18,30 @@ export const sanityClient = createClient({
   useCdn: true,
 });
 
-const builder = imageUrlBuilder(sanityClient);
+const builder = createImageUrlBuilder(sanityClient);
 
 export function urlForImage(source: SanityImageAsset) {
-  return builder.image(source);
+  return builder.image(source).url();
 }
 
 export async function getAllPhotoPosts() {
-  return sanityClient.fetch<PhotoPost[]>(
-    `*[_type == "post" && defined(slug.current)] | order(publishedAt desc){
-      _id,
-      title,
-      slug,
-      publishedAt,
-      image,
-      body
+  const photos = await sanityClient.fetch<PhotoDocument[]>(
+    `*[_type == "photo" && defined(slug.current)] | order(publishedAt desc){
+    _id,
+    title,
+    slug,
+    orientation,
+    image,
+    gridSize,
+    tag
     }`
   );
+  return photos.map((photo) => ({...photo, image: urlForImage(photo.image)} as unknown as Photo));
 }
 
 export async function getPhotoPostBySlug(slug: string) {
-  return sanityClient.fetch<PhotoPost | null>(
-    `*[_type == "post" && slug.current == $slug][0]{
+  return sanityClient.fetch<Photo | null>(
+    `*[_type == "photo" && slug.current == $slug][0]{
       _id,
       title,
       slug,
@@ -51,13 +53,13 @@ export async function getPhotoPostBySlug(slug: string) {
   );
 }
 
-export function bodyToExcerpt(body: PhotoPost["body"], maxLength = 130) {
-  if (!body?.length) return "";
-  const text = body
-    .flatMap((block) => block.children ?? [])
-    .map((child) => child.text ?? "")
-    .join(" ")
-    .replace(/\s+/g, " ")
-    .trim();
-  return text.length > maxLength ? `${text.slice(0, maxLength).trim()}...` : text;
-}
+// export function bodyToExcerpt(body: PhotoPost["body"], maxLength = 130) {
+//   if (!body?.length) return "";
+//   const text = body
+//     .flatMap((block) => block.children ?? [])
+//     .map((child) => child.text ?? "")
+//     .join(" ")
+//     .replace(/\s+/g, " ")
+//     .trim();
+//   return text.length > maxLength ? `${text.slice(0, maxLength).trim()}...` : text;
+// }

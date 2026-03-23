@@ -1,3 +1,4 @@
 import { photoType } from "./photoType";
+import { tagType } from "./tagType";
 
-export const schemaTypes = [photoType]
+export const schemaTypes = [photoType, tagType]

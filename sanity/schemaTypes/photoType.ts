@@ -1,8 +1,8 @@
 import {defineField, defineType} from 'sanity'
 
 export const photoType = defineType({
-  name: 'post',
-  title: 'Post',
+  name: 'photo',
+  title: 'Photo',
   type: 'document',
   fields: [
     defineField({
@@ -23,13 +23,51 @@ export const photoType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'orientation',
+      title: 'Orientation',
+      type: 'string',
+      options: {
+        layout: 'radio',
+        list: ['portrait', 'landscape'],
+      },
+    }),
+    defineField({
       name: 'image',
+      title: 'Image',
       type: 'image',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'tag',
+      title: "Tags",
+      type: 'array',
+      of: [{type: 'tag'}],
+      validation: (Rule) => Rule.unique(),
+    }),
+    defineField({
+      name: "gridSize",
+      title: "Grid Size",
+      type: "array",
+      of: [
+        {
+          type: "string",
+        },
+      ],
+      options: {
+        list: [
+          { title: "Square", value: "square"},
+          { title: "Portrait", value: "portrait" },
+          { title: "Landscape", value: "landscape" },
+          { title: "Big Square", value: "bigSquare" },
+        ],
+        layout: "grid",
+      },
     }),
     defineField({
       name: 'body',
       type: 'array',
       of: [{type: 'block'}],
+      readOnly: true,
     }),
   ],
 })

@@ -1,3 +1,5 @@
+import { GRID_SIZE } from "./constants";
+
 export interface SanityImageAsset {
   _ref?: string;
   _type?: string;
@@ -8,14 +10,18 @@ export interface SanityImageAsset {
   alt?: string;
 }
 
-export interface PhotoPost {
+
+
+export interface PhotoDocument {
   _id: string;
   title: string;
   slug: {
     current: string;
   };
+  gridSize: GridSizeKey[];
   publishedAt: string;
-  image?: SanityImageAsset;
+  orientation: "portrait" | "landscape";
+  image: SanityImageAsset;
   body?: Array<{
     _type: string;
     children?: Array<{
@@ -24,3 +30,13 @@ export interface PhotoPost {
     }>;
   }>;
 }
+export interface Photo extends Omit<PhotoDocument, "image"> {
+  image: string;
+}
+
+export interface PhotoInGrid extends Photo {
+  className: string;
+
+}
+
+type GridSizeKey =keyof typeof GRID_SIZE;

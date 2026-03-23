@@ -22,6 +22,7 @@ export interface PhotoDocument {
   publishedAt: string;
   orientation: "portrait" | "landscape";
   image: SanityImageAsset;
+  filename: string;
   body?: Array<{
     _type: string;
     children?: Array<{
@@ -32,6 +33,7 @@ export interface PhotoDocument {
 }
 export interface Photo extends Omit<PhotoDocument, "image"> {
   image: string;
+  downloadUrl: string;
 }
 
 export interface PhotoInGrid extends Photo {

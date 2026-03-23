@@ -1,12 +1,11 @@
 ---
 import "../styles/global.css";
-import { getAllPhotoPosts, urlForImage } from "../lib/sanity";
+import { getAllPhotoPosts } from "../lib/sanity";
 import { getMasonryGrid } from "../lib/grid";
 import Photo from "../components/Photo.astro";
-let photos = [];
-photos = await getAllPhotoPosts();
 
-const layout = getMasonryGrid(photos, 7, true);
+const photos = await getAllPhotoPosts();
+const layout = getMasonryGrid(photos, 6, true);
 ---
 
 <html lang="en">
@@ -30,18 +29,16 @@ const layout = getMasonryGrid(photos, 7, true);
 
       <section class="masonry-grid" aria-label="Photo Gallery">
         {
-          layout.map((photo) => {
-            const imageUrl = photo.image;
-            return (
-              <Photo
-                title={photo.title}
-                url={imageUrl}
-                downloadUrl={imageUrl}
-                orientation={photo.orientation}
-                className={photo.className}
-              />
-            );
-          })
+          layout.map((photo, index) => (
+            <Photo
+              title={photo.title}
+              url={photo.image}
+              downloadUrl={photo.downloadUrl}
+              orientation={photo.orientation}
+              className={photo.className}
+              loading={index > 10 ? "lazy" : "eager"}
+            />
+          ))
         }
       </section>
     </main>

@@ -6,9 +6,7 @@ const projectId = import.meta.env.SANITY_PROJECT_ID;
 const dataset = import.meta.env.SANITY_DATASET;
 
 if (!projectId || !dataset) {
-  throw new Error(
-    "Missing Sanity env vars. Set SANITY_PROJECT_ID and SANITY_DATASET in astro/.env."
-  );
+  throw new Error("Missing Sanity env vars. Set SANITY_PROJECT_ID and SANITY_DATASET in astro/.env.");
 }
 
 export const sanityClient = createClient({
@@ -24,6 +22,10 @@ export function urlForImage(source: SanityImageAsset) {
   return builder.image(source).url();
 }
 
+export function downloadUrlForImage(filename: string, source: SanityImageAsset) {
+  return builder.image(source).quality(100).forceDownload(filename).url();
+}
+
 export async function getAllPhotoPosts() {
   const photos = await sanityClient.fetch<PhotoDocument[]>(
     `*[_type == "photo" && defined(slug.current)] | order(publishedAt desc){
@@ -36,7 +38,14 @@ export async function getAllPhotoPosts() {
     tag
     }`
   );
-  return photos.map((photo) => ({...photo, image: urlForImage(photo.image)} as unknown as Photo));
+  return photos.map(
+    (photo) =>
+      ({
+        ...photo,
+        image: urlForImage(photo.image),
+        downloadUrl: downloadUrlForImage(photo. slug.current, photo.image),
+      } as unknown as Photo)
+  );
 }
 
 export async function getPhotoPostBySlug(slug: string) {
@@ -52,14 +61,3 @@ export async function getPhotoPostBySlug(slug: string) {
     { slug }
   );
 }
-
-// export function bodyToExcerpt(body: PhotoPost["body"], maxLength = 130) {
-//   if (!body?.length) return "";
-//   const text = body
-//     .flatMap((block) => block.children ?? [])
-//     .map((child) => child.text ?? "")
-//     .join(" ")
-//     .replace(/\s+/g, " ")
-//     .trim();
-//   return text.length > maxLength ? `${text.slice(0, maxLength).trim()}...` : text;
-// }

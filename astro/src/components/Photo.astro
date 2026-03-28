@@ -2,15 +2,17 @@
 import { Picture } from "astro:assets";
 import Download from "../../public/download.svg";
 
-const { title, url, downloadUrl, orientation, className, loading } = Astro.props;
+const { title, url, downloadUrl, orientation, className, loading, slug } = Astro.props;
 
-const width = orientation === "potraint" ? 300 : 540;
-const height = orientation === "potraint" ? 540 : 300;
+const width = orientation === "potraint" ? 250 : 300;
+const height = orientation === "potraint" ? 300 : 250;
 ---
 
 <article class="masonry-grid-picture" class:list={[orientation, className]}>
+<a href={`/photos/${slug}`}>
   <Picture src={url} alt={title} width={width} height={height} loading={loading}  formats={['avif', 'webp']}/>
   <a class="download-link" href={downloadUrl} download>
     <Download class="download-icon" />
   </a>
+  <a>
 </article>

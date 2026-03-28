@@ -1,11 +1,13 @@
 ---
 import "../../styles/global.css";
+import { Picture } from "astro:assets";
+import Topbar from "@components/Topbar.astro";
 import { getAllPhotoPosts, getPhotoPostBySlug, urlForImage } from "../../lib/sanity";
 
 export async function getStaticPaths() {
   const posts = await getAllPhotoPosts();
   return posts.map((post) => ({
-    params: { slug: post.slug.current },
+    params: { slug: post.slug},
   }));
 }
 
@@ -24,14 +26,30 @@ if (!post) {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <title>{post.title} - Lenscape</title>
+
+
+    <script>
+
+document.querySelector("#post-data").style = `width: ${document.querySelector("#post-photo").width}px`;
+document.querySelector(".post-photo-container").style = `width: ${document.querySelector("#post-photo").width}px`;
+</script>
+
   </head>
-  <body class="site-shell">
-    <main class="container detail-page">
-      <a href="/" class="back-link">Back to gallery</a>
-      <article class="detail-card">
-        <div class="detail-content">
-        </div>
-      </article>
+  <body>
+    <Topbar active="snaps"/>
+    <main class="container post-page">
+      <section class:list={["post", post.orientation ]}>
+        <article class="post-photo-container">
+          <img class:list={[post.orientation]} alt={post.title} src={post.image} 
+            id="post-photo"
+            class="post-photo"
+          transition:name={post.slug}
+          />
+        </article>
+        <article class="post-data" id="post-data">
+          <h3>{post.title}</h3>
+        </article>
+      </section>
     </main>
   </body>
 </html>

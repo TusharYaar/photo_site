@@ -2,13 +2,8 @@
 import "../styles/global.css";
 import { getAllPhotoPosts } from "../lib/sanity";
 import { getMasonryGrid } from "../lib/grid";
-import Photo from "@components/Photo.astro";
-import Topbar from "@components/Topbar.astro";
-import {
-  ClientRouter,
-  fade,
-  slide,
-} from 'astro:transitions';
+import Photo from "../components/Photo.astro";
+import Topbar from "../components/Topbar.astro";
 
 const photos = await getAllPhotoPosts();
 const layout = getMasonryGrid(photos, 6, true);
@@ -23,11 +18,9 @@ const layout = getMasonryGrid(photos, 6, true);
     <meta name="generator" content={Astro.generator} />
     <title>Snaps - by Tushar</title>
     <meta name="description" content="" />
-    <ClientRouter />
-
   </head>
   <body>
-    <Topbar active="snaps"/>
+    <Topbar active="collections"/>
     <main class="container">
       <section class="masonry-grid" aria-label="Photo Gallery">
         {
@@ -35,12 +28,10 @@ const layout = getMasonryGrid(photos, 6, true);
             <Photo
               title={photo.title}
               url={photo.image}
-              slug={photo.slug}
               downloadUrl={photo.downloadUrl}
               orientation={photo.orientation}
               className={photo.className}
               loading={index > 10 ? "lazy" : "eager"}
-              transition:name={photo.slug}
             />
           ))
         }
@@ -48,4 +39,3 @@ const layout = getMasonryGrid(photos, 6, true);
     </main>
   </body>
 </html>
-

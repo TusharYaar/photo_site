@@ -41,8 +41,22 @@ export const photoType = defineType({
       name: 'tag',
       title: "Tags",
       type: 'array',
-      of: [{type: 'tag'}],
-      validation: (Rule) => Rule.unique(),
+      of: [
+        {
+          type: 'reference',
+          to: [
+            {type: 'tag'},
+          ]
+        }
+      ]
+    }),
+    defineField({
+      name: 'collection',
+      title: "Collection",
+      type: 'reference',
+      to: {type: 'collection'},
+
+  
     }),
     defineField({
       name: "gridSize",

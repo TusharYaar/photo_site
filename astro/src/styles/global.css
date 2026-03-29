@@ -6,17 +6,24 @@
   --text: #eef2f5;
   --muted: #9aa6b2;
   --accent: #8ec5ff;
+  --topbar-max-width: 95vw; 
 }
 
 * {
   box-sizing: border-box;
 }
 
+@media (width > 792px) {
+  :root {
+    --topbar-max-width: 90vw; 
+  }
+}
+
 html,
 body {
   margin: 0;
   min-height: 100%;
-  background: radial-gradient(circle at top, #141b23, var(--bg) 52%);
+  background: radial-gradient(circle at bottom, #141b23, var(--bg) 70%);
   color: var(--text);
   font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
 }
@@ -26,8 +33,48 @@ a {
   text-decoration: none;
 }
 
-.site-shell {
-  min-height: 100vh;
+.topbar-container {
+  background:  var(--bg);
+  position: sticky;
+  top:0px;
+  z-index: 100;
+  
+}
+.topbar {
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  max-width: var(--topbar-max-width);
+  margin: 0px auto;
+  padding: 24px 0px;
+
+
+}
+.topbar-icon {
+  width: 84px;
+  height: 70px; 
+}
+.navbar {
+  flex-direction: row;
+  display: flex;
+  position: sticky;
+  border-radius: 24px;
+  overflow: hidden;
+
+}
+
+.navbar-item {
+  padding: 16px;
+}
+
+.navbar-item:hover {
+  background-color: #50909b;
+}
+
+.navbar-item.active {
+  padding: 16px;
+  background-color: #52C6DA;
+  color: #354C58;
 }
 
 .container {
@@ -36,35 +83,11 @@ a {
   padding: 2.5rem 0 4rem;
 }
 
-.hero {
-  margin-bottom: 2.5rem;
-}
-
-.hero-kicker {
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--accent);
-  font-size: 0.78rem;
-}
-
-.hero-title {
-  font-size: clamp(2.1rem, 5vw, 3.5rem);
-  margin: 0;
-}
-
-.hero-subtitle {
-  color: var(--muted);
-  margin: 0.8rem 0 0;
-  max-width: 58ch;
-}
-
 .masonry-grid {
   display: grid;
-  /* This creates as many columns as will fit, each at least 250px wide */
   grid-template-columns: repeat(2, 172px);
-  grid-auto-rows: 172px;
+  grid-auto-rows: 96px;
   grid-auto-flow: dense;
-  /* Space between your photos */
   grid-gap: 8px;
   padding: 16px 4px;
 }
@@ -75,7 +98,7 @@ a {
 }
   .masonry-grid {
     grid-template-columns: repeat(2, 192px);
-    grid-auto-rows: 192px;
+    grid-auto-rows: 104px;
     padding: 16px 6px;
 
   }
@@ -87,10 +110,11 @@ a {
 }
   .masonry-grid {
     grid-template-columns: repeat(2, 206px);
-    grid-auto-rows: 206px;
+    grid-auto-rows: 116px;
     padding: 16px 6px;
     grid-gap: 12px;
     padding: 16px 8px;
+    grid-auto-flow: dense;
   }
 }
 
@@ -101,7 +125,7 @@ a {
 }
   .masonry-grid {
     grid-template-columns: repeat(2, 246px);
-    grid-auto-rows: 246px;
+    grid-auto-rows: 152px;
     grid-gap: 16px;
     padding: 16px 8px;
   }
@@ -113,7 +137,7 @@ a {
 }
   .masonry-grid {
     grid-template-columns: repeat(2, 286px);
-    grid-auto-rows: 286px;
+    grid-auto-rows: 152px;
   }
 }
 
@@ -123,7 +147,7 @@ a {
   }
   .masonry-grid {
     grid-template-columns: repeat(4, 154px);
-    grid-auto-rows: 154px;
+    grid-auto-rows: 82px;
     grid-gap: 12px;
     padding: 16px 8px;
   }
@@ -135,7 +159,7 @@ a {
   }
   .masonry-grid {
     grid-template-columns: repeat(4, 182px);
-    grid-auto-rows: 182px;
+    grid-auto-rows: 92px;
     padding: 16px 10px;
   }
 }
@@ -146,7 +170,7 @@ a {
   }
   .masonry-grid {
     grid-template-columns: repeat(6, 154px);
-    grid-auto-rows: 154px;
+    grid-auto-rows: 82px;
     grid-gap: 12px;
     padding: 16px 8px;
   }
@@ -220,26 +244,63 @@ a {
   border: 1px solid var(--line);
   border-radius: 1.1rem;
   overflow: hidden;
+
 }
 
-.detail-image {
+
+/* ======================================= */
+/* Footer Styles */
+/* ======================================= */
+
+
+.site-footer {
   width: 100%;
-  max-height: 72vh;
-  object-fit: cover;
-  display: block;
+  padding: 40px 0px;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #555;
+  max-width: var(--topbar-max-width);
+  margin: 0px auto;
 }
 
-.detail-content {
-  padding: 1.2rem 1.3rem 1.5rem;
+.footer-content {
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
 }
 
-.detail-content h1 {
-  margin: 0.3rem 0 0.8rem;
-  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+/* Navigation Links */
+.footer-nav, .footer-socials {
+  display: flex;
+  gap: 24px;
 }
 
-.detail-content p {
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.65;
+a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 14px;
+  transition: color 0.2s ease;
+  
+}
+
+a:hover {
+  color: #000;
+}
+
+.copyright {
+  font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .footer-nav {
+    flex-direction: column;
+    gap: 12px;
+  }
 }

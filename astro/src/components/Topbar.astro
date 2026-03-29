@@ -1,0 +1,26 @@
+---
+import Logo from "../../public/photo-logo.svg";
+import Download from "../../public/download.svg";
+const { active } = Astro.props;
+---
+
+<nav class="topbar-container">
+    <div class="topbar">
+
+    <a class="topbar-icon">
+        <Logo class="topbar-icon-img" />
+    </a>
+    <div class="navbar">
+        <!-- <div class:list={["navbar-item", {active: "snaps" === active }]}>
+            <a href="/">
+                Snaps
+            </a>
+        </div> -->
+        <!-- <div class:list={["navbar-item", {active: "collections" === active }]}>
+            <a href="/collections">
+                Collections
+            </a>
+        </div> -->
+    </div>
+</div>
+</nav>

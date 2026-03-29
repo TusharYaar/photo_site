@@ -1,35 +1,13 @@
 ---
-import "../styles/global.css";
 import { getAllPhotoPosts } from "../lib/sanity";
 import { getMasonryGrid } from "../lib/grid";
 import Photo from "@components/Photo.astro";
-import Topbar from "@components/Topbar.astro";
-import Footer from "@components/Footer.astro";
-
-import {
-  ClientRouter,
-  fade,
-  slide,
-} from 'astro:transitions';
+import Layout from "../layouts/main.astro";
 
 const photos = await getAllPhotoPosts();
 const layout = getMasonryGrid(photos, 6, true);
 ---
-
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width initial-scale=1" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Snaps - by Tushar</title>
-    <meta name="description" content="A collection of moments, landscapes, and perspectives curated with a focus on symmetry and detail. No clutter—just the shot." />
-    <script defer src="/who-downloads-photos.js" data-website-id="f3ad150e-4d71-45c8-a64e-8e70df72e986" data-domains="snaps.tusharyaar.com"></script>
-  </head>
-  <body>
-    <Topbar active="snaps"/>
-    <main class="container">
+  <Layout title="Snaps - by Tushar">
       <section class="masonry-grid" aria-label="Photo Gallery">
         {
           layout.map((photo, index) => (
@@ -45,8 +23,4 @@ const layout = getMasonryGrid(photos, 6, true);
           ))
         }
       </section>
-    </main>
-  <Footer />
-  </body>
-</html>
-
+    </Layout>

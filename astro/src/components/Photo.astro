@@ -9,6 +9,7 @@ const height = orientation === "potraint" ? 600 : 500;
 ---
 
 <article class="masonry-grid-picture" class:list={[orientation, className]}>
+  <a href={`/photos/${slug}`}>
   <Image src={url} alt={title} width={width} height={height} loading={loading}
     fit="contain"
     quality="high"
@@ -16,4 +17,5 @@ const height = orientation === "potraint" ? 600 : 500;
   <a class="download-link" href={downloadUrl} data-umami-event="download-photo" data-umami-event-slug={slug} download>
     <Download class="download-icon" />
   </a>
+</a>
 </article>

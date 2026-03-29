@@ -1,26 +1,20 @@
 ---
 import Logo from "../../public/photo-logo.svg";
 import Download from "../../public/download.svg";
-const { active } = Astro.props;
+const { active,  downloadUrl = undefined, slug = undefined } = Astro.props;
 ---
 
 <nav class="topbar-container">
     <div class="topbar">
 
-    <a class="topbar-icon">
+    <a class="topbar-icon" herf="/">
         <Logo class="topbar-icon-img" />
     </a>
-    <div class="navbar">
-        <!-- <div class:list={["navbar-item", {active: "snaps" === active }]}>
-            <a href="/">
-                Snaps
-            </a>
-        </div> -->
-        <!-- <div class:list={["navbar-item", {active: "collections" === active }]}>
-            <a href="/collections">
-                Collections
-            </a>
-        </div> -->
+    { downloadUrl && <div class="navbar">
+        <a class="navbar-item active" href={downloadUrl} data-umami-event="download-photo" data-umami-event-slug={slug} download>
+            Download
+        </a>
     </div>
+    }
 </div>
 </nav>

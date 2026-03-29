@@ -1,5 +1,5 @@
 ---
-import "../../styles/global.css";
+import Layout from "../../layouts/main.astro";
 import { getAllPhotoPosts, getPhotoPostBySlug, urlForImage } from "../../lib/sanity";
 
 export async function getStaticPaths() {
@@ -10,28 +10,19 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params;
-const post = slug ? await getPhotoPostBySlug(slug) : null;
+const photo = slug ? await getPhotoPostBySlug(slug) : null;
 
-if (!post) {
+if (!photo) {
   throw new Error(`Photo post not found for slug: ${slug}`);
 }
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <title>{post.title} - Lenscape</title>
-  </head>
-  <body class="site-shell">
-    <main class="container detail-page">
-      <a href="/" class="back-link">Back to gallery</a>
-      <article class="detail-card">
-        <div class="detail-content">
-        </div>
-      </article>
-    </main>
-  </body>
-</html>
+<Layout title={photo.title} downloadUrl={photo.downloadUrl} slug={slug}>
+  <section class="image-wrapper">
+    <img 
+      src={photo.image} 
+      alt={photo.title} 
+      class="main-photo"
+    />
+  </section>
+  </Layout>

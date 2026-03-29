@@ -43,21 +43,32 @@ export async function getAllPhotoPosts() {
       ({
         ...photo,
         image: urlForImage(photo.image),
-        downloadUrl: downloadUrlForImage(photo. slug.current, photo.image),
+        downloadUrl: downloadUrlForImage(photo.slug.current, photo.image),
+        slug: photo.slug.current
       } as unknown as Photo)
   );
 }
 
 export async function getPhotoPostBySlug(slug: string) {
-  return sanityClient.fetch<Photo | null>(
+  const photo = await sanityClient.fetch<PhotoDocument | null>(
     `*[_type == "photo" && slug.current == $slug][0]{
       _id,
       title,
-      slug,
       publishedAt,
       image,
       body
     }`,
     { slug }
   );
+
+  if (photo) {
+    return {
+      ...photo,
+      slug,
+      image: urlForImage(photo.image),
+      downloadUrl: downloadUrlForImage(slug, photo.image),
+    }
+  }
+
+  return null;
 }

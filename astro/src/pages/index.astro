@@ -5,10 +5,10 @@ import Photo from "@components/Photo.astro";
 import Layout from "../layouts/main.astro";
 
 const photos = await getAllPhotoPosts();
-const layout = getMasonryGrid(photos, 6, true);
+const layout = getMasonryGrid(photos, 6, false);
 ---
   <Layout title="Snaps - by Tushar">
-      <section class="masonry-grid" aria-label="Photo Gallery">
+      <section class="masonry-grid" aria-label="Photo Gallery" id="masonry-grid">
         {
           layout.map((photo, index) => (
             <Photo
@@ -42,7 +42,23 @@ const GRID_SIZE = {
         });
       }
       
+
+    function shuffleElements() {
+    const container = document.getElementById("masonry-grid");
+    const elements = Array.from(container.children); // Get all children
+
+    for (let i = elements.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        // Swap elements in the array
+        [elements[i], elements[j]] = [elements[j], elements[i]];
+    }
+
+    // Re-append to the container; appendChild moves nodes instead of copying them
+    elements.forEach(el => container.appendChild(el));
+}
+
         arrangeTiles();
+        shuffleElements();
       </script>
 
     </Layout>

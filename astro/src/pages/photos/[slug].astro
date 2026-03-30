@@ -5,11 +5,11 @@ import { getAllPhotoPosts, getPhotoPostBySlug, urlForImage } from "../../lib/san
 export async function getStaticPaths() {
   const posts = await getAllPhotoPosts();
   return posts.map((post) => ({
-    params: { slug: post.slug.current },
+    params: { slug: post.slug },
   }));
 }
 
-const { slug } = Astro.params;
+const { slug } = Astro.params;  
 const photo = slug ? await getPhotoPostBySlug(slug) : null;
 
 if (!photo) {

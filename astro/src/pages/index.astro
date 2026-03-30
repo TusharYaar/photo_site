@@ -19,8 +19,30 @@ const layout = getMasonryGrid(photos, 6, true);
               orientation={photo.orientation}
               className={photo.className}
               loading={index > 10 ? "lazy" : "eager"}
+              allClasses={photo.gridSize}
             />
           ))
         }
       </section>
+      <script>
+
+const GRID_SIZE = {
+    square:"grid-square",
+    portrait: "grid-portrait",
+    landscape: "grid-landscape",
+    bigSquare: "grid-big-square",
+  };
+      function arrangeTiles() {
+
+        document.querySelectorAll(".masonry-grid-picture").forEach(picture => {
+          const sizes = picture.dataset.gridSizes.split(",");
+          const size = sizes[Math.floor(sizes.length * Math.random())];
+          const className = GRID_SIZE[size];
+          picture.classList.add(className);
+        });
+      }
+      
+        arrangeTiles();
+      </script>
+
     </Layout>

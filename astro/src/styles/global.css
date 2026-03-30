@@ -66,16 +66,16 @@ a {
 .navbar-item {
   padding: 16px;
   background-color: var(--bg-soft);
+  transition: background-color 0.5s;
 }
-
-.navbar-item:hover {
-  background-color: #50909b;
-}
-
 .navbar-item.active {
   padding: 16px;
   background-color: #52C6DA;
   color: #354C58;
+}
+
+.navbar-item:hover {
+  background-color: #3a6a73;
 }
 
 .container {
